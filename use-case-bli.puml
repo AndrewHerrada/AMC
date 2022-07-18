@@ -1,0 +1,63 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+actor :User: as user
+actor :Estudiante: as stu
+actor :Profesor: as teach
+actor :Secretaria: as sec
+actor :Coordinador: as coor
+actor :Rector: as rect
+actor :Bibliotecaria: as biblio
+
+usecase "Iniciar Seción" as login
+usecase "Buscar Partitura" as search
+usecase "Seleccionar \nEditorial" as selectEdit
+usecase "Visualizar" as display
+usecase "Imprimir" as print
+usecase "Registrar \npartituras" as register
+usecase "Dar de alta" as dal
+usecase "Dar de baja" as dba
+usecase "Vender texto" as ventext
+usecase "Solicitar datos" as dateUser
+
+user <|-- teach
+user <|-- sec
+user <|-- coor
+user <|-- rect
+user <|-- biblio
+user <|-- stu
+ 
+stu --> search
+teach --> search
+rect --> search
+coor --> search
+biblio ---> search
+biblio --> register
+biblio --> dal
+biblio --> dba
+sec --> ventext
+
+
+search ..> login : <<include>>
+register ..> login : <<include>>
+selectEdit .> search : <<include>>
+display .> selectEdit : <<include>>
+print ..> display : <<extends>>
+dal ..> register : <<include>>
+dba ..> register : <<include>>
+ventext ..> dateUser : <<include>>
+
+note right of search 
+    Tipo: Estilo,CompositorObra 
+end note
+
+note bottom of register 
+    Tipo,Obra,compositor,editorial 
+end note
+
+note top of dateUser
+    Texto,Nombre,Curso
+end note
+
+
+

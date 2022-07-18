@@ -1,0 +1,59 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+
+actor :User: as user
+actor :Estudiante: as stu
+actor :Profesor: as teach
+actor :Secretaria: as sec
+actor :Coordinador: as coor
+actor :Rector: as rect
+
+usecase "Iniciar Sesión" as login
+usecase "Registrar Notas de Materias Colectivas" as registerNotesGS
+usecase "Registrar Notas de Especialidad" as registerNotesS
+usecase "Registrar Estudiante" as stuRegistration
+usecase "Registrar Inscripción" as enrollment
+usecase "Administrar Gestión Académica" as manageYear
+usecase "Asignar Curso" as assignGrade
+usecase "Asignar Especialidad" as assignS
+usecase "Asignar Profesor" as assignT
+usecase "Asignar Orquesta(s)" as assignO
+
+' Cursos | Niveles | Materias | Gestión
+
+note "Gestión (2022, 2022-S1, 2022-invierno),\nNiveles, Materias, Gestión" as N1
+note "Código generado automáticamente" as N2
+note "Incluye primera-segunda esp. y compl." as N3
+
+user <|-- stu
+user <|-- teach
+user <|-- sec
+user <|-- coor
+user <|-- rect
+
+user --> login
+teach --> registerNotesGS
+teach --> registerNotesS
+sec --> stuRegistration
+coor --> enrollment
+rect --> manageYear
+
+enrollment  <-- stuRegistration #line.dashed : <<extends>>
+enrollment --> assignGrade : <<include>>
+enrollment <.. assignS : <<extends>>
+assignS --> assignT : <<include>>
+enrollment <.. assignO : <<extends>>
+
+manageYear .. N1
+stuRegistration .. N2
+assignS .. N3
+
+@enduml
+
+' Profesores: Registrar notas
+
+' Estudiantes: Ver notas
+' Estudiantes: Buscar partituras de su especialidad por grados
+' Padres: Ver notas de sus hijos
+
+' Licencias * Definir con Director Académico y Rector.
